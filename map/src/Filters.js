@@ -38,6 +38,7 @@ export default class Filters extends Component {
 
     return (
       <div className='Filters'>
+        <h2 className='Filter-header'>Filter records</h2>
         <div className='Filter'>
           <div className='Filter-label'>Name:</div>
           <div>
@@ -80,6 +81,8 @@ export default class Filters extends Component {
             </select>
           </div>
         </div>
+
+        <a className='Filter-view-fullscreen' href='.' target='_blank'>view fullscreen</a>
       </div>
     );
   }

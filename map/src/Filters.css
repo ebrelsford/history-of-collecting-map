@@ -3,6 +3,7 @@
   float: left;
   height: 100vh;
   padding: 10px;
+  position: relative;
   width: 25%;
 }
 
@@ -11,4 +12,9 @@
 }
 
 .Filter-label {
+}
+
+.Filter-view-fullscreen {
+  bottom: 15px;
+  position: absolute;
 }

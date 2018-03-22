@@ -9,15 +9,6 @@
   width: 250px;
 }
 
-.Popup a:link,
-.Popup a:visited,
-.Popup a:hover,
-.Popup a:active {
-  color: black;
-  font-weight: bold;
-  text-decoration: none;
-}
-
 .Popup a:hover {
   text-decoration: underline;
 }

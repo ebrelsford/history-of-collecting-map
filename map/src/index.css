@@ -23,3 +23,12 @@ body {
   margin: 0;
   padding: 0;
 }
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
