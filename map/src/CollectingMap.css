@@ -1,0 +1,8 @@
+.CollectingMap {
+  float: left;
+  width: 75%;
+}
+
+.CollectingMap.mouse-over-feature canvas {
+  cursor: pointer;
+}

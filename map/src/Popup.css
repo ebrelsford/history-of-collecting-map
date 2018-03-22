@@ -1,0 +1,74 @@
+.mapboxgl-popup-content {
+  overflow-y: auto;
+}
+
+.Popup {
+  font-family: 'CallunaRegular', serif;
+  font-weight: normal;
+  max-height: 300px;
+  width: 250px;
+}
+
+.Popup a:link,
+.Popup a:visited,
+.Popup a:hover,
+.Popup a:active {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.Popup a:hover {
+  text-decoration: underline;
+}
+
+.Popup-MultipleFeatures {
+  min-height: 275px;
+}
+
+.Popup-IndividualFeature {
+  font-size: 14px;
+}
+
+.Popup-IndividualFeature-actions {
+  margin-top: -15px;
+}
+
+.Popup-IndividualFeature-content {
+  margin-top: 20px;
+}
+
+.Popup-IndividualFeature-description {
+  margin: 25px 0;
+}
+
+.Popup-IndividualFeature-name {
+  font-size: 16px;
+}
+
+.Popup-IndividualFeature-location {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.Popup-IndividualFeature-role {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.Popup button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.Popup .back-button {
+  float: left;
+}
+
+.Popup .close-button {
+  float: right;
+  font-size: 24px;
+  line-height: 14px;
+}
