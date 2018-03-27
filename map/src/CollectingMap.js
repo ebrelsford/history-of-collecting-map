@@ -11,6 +11,8 @@ const Map = ReactMapboxGl({
   maxZoom: 9
 });
 
+const COLLECTING_FEATURES_LAYER_ID = 'collecting-features';
+
 export default class CollectingMap extends Component {
   constructor(props) {
     super(props);
@@ -91,7 +93,10 @@ export default class CollectingMap extends Component {
       [point.x - 1, point.y - 1],
       [point.x + 1, point.y + 1]
     ];
-    return map.queryRenderedFeatures(bbox, { layers: ['collecting-features'] });
+    if (!map.getLayer(COLLECTING_FEATURES_LAYER_ID)) {
+      return [];
+    }
+    return map.queryRenderedFeatures(bbox, { layers: [COLLECTING_FEATURES_LAYER_ID] });
   }
 
   render() {
@@ -169,7 +174,7 @@ export default class CollectingMap extends Component {
               ]
             }}
             layerOptions={{
-              id: 'collecting-features'
+              id: COLLECTING_FEATURES_LAYER_ID
             }}
           />
 
