@@ -24,6 +24,11 @@ body {
   padding: 0;
 }
 
+h2 {
+  font-weight: normal;
+  margin-top: 0;
+}
+
 a:link,
 a:visited,
 a:hover,
