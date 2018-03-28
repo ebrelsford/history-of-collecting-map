@@ -14,6 +14,6 @@ python bin/prepare_archive_data.py < $PREPARED_FILE | python bin/geocode_archive
 csv2geojson $GEOCODED_FILE > $GEOJSON_FILE
 
 # Clean up
-#rm $PREPARED_FILE
+rm $PREPARED_FILE
 
 # TODO put geojson in the proper place
