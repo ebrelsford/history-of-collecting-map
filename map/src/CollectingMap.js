@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import uniqBy from 'lodash.uniqby';
 import React, { Component } from 'react';
 import ReactMapboxGl, { GeoJSONLayer, Layer, Source, ZoomControl } from 'react-mapbox-gl';
+import turfBbox from '@turf/bbox';
 import Popup from './Popup.js';
 import './CollectingMap.css';
 import { MAPBOX_ACESS_TOKEN, MAPBOX_STYLE } from './config.js';
@@ -104,6 +105,15 @@ export default class CollectingMap extends Component {
     const { data } = this.props;
     const filteredData = this.filterData(data);
 
+    let bbox, bounds;
+    if (filteredData.features.length) {
+      bbox = turfBbox(filteredData);
+      bounds = [
+        [bbox[0], bbox[1]],
+        [bbox[2], bbox[3]]
+      ];
+    }
+
     return (
       <div className={classNames('CollectingMap', { 'mouse-over-feature': mouseOverFeature })}>
         <Map
@@ -115,6 +125,11 @@ export default class CollectingMap extends Component {
           }}
           center={center}
           zoom={zoom}
+          fitBounds={bounds}
+          fitBoundsOptions={{
+            maxZoom: 8,
+            padding: 50
+          }}
           onClick={this.handleMapClick.bind(this)}
           onMouseMove={this.handleMouseMove.bind(this)}
           onMoveEnd={this.handleMoveEnd.bind(this)}
