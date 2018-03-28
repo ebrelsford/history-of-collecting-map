@@ -24,6 +24,7 @@ Run the script on an input CSV:
 The map is a front-end JavaScript application in `map`. Build it like so:
  1. `cd map`
  2. `npm install`
- 3. `npm run build`
+ 3. `mv src/config.example.js src/config.js` and edit the variables
+ 4. `npm run build`
 
 The application will then be available in `map/build`.
