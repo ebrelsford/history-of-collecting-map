@@ -1,12 +1,15 @@
 import uniq from 'lodash.uniq';
 import React, { Component } from 'react';
+import { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import './Filters.css';
 
 export default class Filters extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      decades: [],
+      possibleDecadeRange: [],
+      selectedDecadeRange: [],
       genders: [],
       roles: []
     };
@@ -14,10 +17,15 @@ export default class Filters extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.data !== this.props.data) {
+      const decades = this.getUnique(nextProps.data, 'Decades');
+      const possibleDecadeRange = [decades[0], decades.slice(-1)[0] + 10];
+
       this.setState({
-        decades: this.getUnique(nextProps.data, 'Decades'),
-        roles: this.getUnique(nextProps.data, 'Role'),
+        possibleDecadeRange,
+        roles: this.getUnique(nextProps.data, 'Role')
       });
+
+      this.props.onChange({ decadeRange: possibleDecadeRange });
     }
   }
 
@@ -34,7 +42,7 @@ export default class Filters extends Component {
 
   render() {
     const { filters } = this.props;
-    const { decades, roles } = this.state;
+    const { possibleDecadeRange, roles } = this.state;
 
     return (
       <div className='Filters'>
@@ -59,14 +67,17 @@ export default class Filters extends Component {
         </div>
 
         <div className='Filter'>
-          <div className='Filter-label'>Decades:</div>
-          <div>
-            <select onChange={e => this.props.onChange({ decades: e.target.value })} value={filters.decades}>
-              <option>any</option>
-              {decades.map(decade => (
-                <option key={decade}>{decade}</option>
-              ))}
-            </select>
+          <div className='Filter-label'>Years active:</div>
+          <div className='year-slider'>
+            <span className='year-slider-indicator year-slider-indicator-left'>{filters.decadeRange[0]}</span>
+            <Range
+              min={possibleDecadeRange[0]}
+              max={possibleDecadeRange[1]}
+              onChange={value => this.props.onChange({ decadeRange: value })}
+              step={10}
+              value={filters.decadeRange}
+            />
+            <span className='year-slider-indicator year-slider-indicator-right'>{filters.decadeRange[1]}</span>
           </div>
         </div>
 

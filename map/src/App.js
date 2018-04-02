@@ -11,7 +11,7 @@ class App extends Component {
     this.state = {
       data: null,
       filters: {
-        decades: 'any',
+        decadeRange: [],
         gender: 'any',
         name: '',
         role: 'any'
@@ -25,7 +25,9 @@ class App extends Component {
       .then(data => {
         const mapped = { ...{}, ...data };
         mapped.features = data.features.map(feature => {
-          feature.properties.Decades = feature.properties.Decades.split(';');
+          if (feature.properties.Decades && feature.properties.Decades.length > 0) {
+            feature.properties.Decades = feature.properties.Decades.split(';').map(d => parseInt(d, 10));
+          }
           feature.properties.Role = feature.properties.Role.split(';');
           return feature;
         });

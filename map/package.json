@@ -8,6 +8,8 @@
     "lodash.uniq": "^4.5.0",
     "lodash.uniqby": "^4.7.0",
     "mapbox-gl": "^0.44.1",
+    "rc-align": "^2.3.4",
+    "rc-slider": "^8.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-mapbox-gl": "^3.8.0",

@@ -28,7 +28,7 @@ export default class CollectingMap extends Component {
 
   filterData(data) {
     const { filters } = this.props;
-    const { decades, gender, role } = filters;
+    const { decadeRange, gender, role } = filters;
     const filteredData = { type: 'FeatureCollection', features: [] };
     if (!data) return filteredData;
     let name = filters.name.toLowerCase();
@@ -40,8 +40,10 @@ export default class CollectingMap extends Component {
       if (role && role !== 'any') {
         if (feature.properties.Role.indexOf(role) < 0) return false;
       }
-      if (decades && decades !== 'any') {
-        if (feature.properties.Decades.indexOf(decades) < 0) return false;
+      if (decadeRange && decadeRange.length === 2) {
+        if (!feature.properties.Decades) return false;
+        const validDecades = feature.properties.Decades.filter(d => d >= decadeRange[0] && d < decadeRange[1]);
+        if (validDecades.length === 0) return false;
       }
       if (name && name !== '') {
         if (feature.properties.Name.toLowerCase().indexOf(name) < 0) return false;

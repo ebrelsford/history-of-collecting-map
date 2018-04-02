@@ -8,13 +8,46 @@
 }
 
 .Filter {
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .Filter-label {
+  margin-bottom: 5px;
 }
 
 .Filter-view-fullscreen {
   bottom: 15px;
   position: absolute;
+}
+
+.year-slider {
+  margin-top: 10px;
+}
+
+.year-slider-indicator {
+  display: inline-block;
+  vertical-align: top;
+  width: 35px;
+}
+
+.rc-slider {
+  display: inline-block;
+  margin: 0 10px;
+  width: calc(100% - 90px);
+}
+
+.rc-slider-handle {
+  border-color: gray;
+}
+
+.rc-slider-handle:active {
+  border-color: gray;
+}
+
+.rc-slider-handle:hover {
+  border-color: gray;
+}
+
+.rc-slider-track {
+  background-color: gray;
 }
