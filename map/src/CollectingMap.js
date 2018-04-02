@@ -19,6 +19,8 @@ export default class CollectingMap extends Component {
     super(props);
     this.state = {
       center: [0, 0],
+      filteredData: [],
+      map: null,
       mouseOverFeature: false,
       popupCoordinates: null,
       selectedFeatures: [],
@@ -26,8 +28,33 @@ export default class CollectingMap extends Component {
     };
   }
 
-  filterData(data) {
-    const { filters } = this.props;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.filters !== this.props.filters) {
+      const { data, filters } = nextProps;
+      const { map } = this.state;
+      const filteredData = this.filterData(data, filters);
+
+      let bbox, bounds;
+      if (filteredData.features.length) {
+        bbox = turfBbox(filteredData);
+        bounds = [
+          [bbox[0], bbox[1]],
+          [bbox[2], bbox[3]]
+        ];
+      }
+
+      if (bounds && map) {
+        map.fitBounds(bounds, {
+          maxZoom: 8,
+          padding: 50
+        });
+      }
+
+      this.setState({ filteredData });
+    }
+  }
+
+  filterData(data, filters) {
     const { decadeRange, gender, role } = filters;
     const filteredData = { type: 'FeatureCollection', features: [] };
     if (!data) return filteredData;
@@ -103,18 +130,7 @@ export default class CollectingMap extends Component {
   }
 
   render() {
-    const { center, mouseOverFeature, popupCoordinates, selectedFeatures, zoom } = this.state;
-    const { data } = this.props;
-    const filteredData = this.filterData(data);
-
-    let bbox, bounds;
-    if (filteredData.features.length) {
-      bbox = turfBbox(filteredData);
-      bounds = [
-        [bbox[0], bbox[1]],
-        [bbox[2], bbox[3]]
-      ];
-    }
+    const { center, filteredData, mouseOverFeature, popupCoordinates, selectedFeatures, zoom } = this.state;
 
     return (
       <div className={classNames('CollectingMap', { 'mouse-over-feature': mouseOverFeature })}>
@@ -127,14 +143,10 @@ export default class CollectingMap extends Component {
           }}
           center={center}
           zoom={zoom}
-          fitBounds={bounds}
-          fitBoundsOptions={{
-            maxZoom: 8,
-            padding: 50
-          }}
           onClick={this.handleMapClick.bind(this)}
           onMouseMove={this.handleMouseMove.bind(this)}
           onMoveEnd={this.handleMoveEnd.bind(this)}
+          onStyleLoad={map => this.setState({ map })}
         >
           <ZoomControl/>
 
