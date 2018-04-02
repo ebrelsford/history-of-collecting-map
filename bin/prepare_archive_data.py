@@ -12,7 +12,8 @@ def fix_decades(decades):
     decade_list = []
     decades = ''.join(re.findall(r'(?:\d|-)+', decades))
     for start in range(0, len(decades), 9):
-        decade_list.append(decades[start:start+9])
+        decade_string = decades[start:start+9]
+        decade_list.append(decade_string.split('-')[0])
     return ';'.join(decade_list)
 
 

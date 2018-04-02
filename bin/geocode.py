@@ -36,7 +36,7 @@ def make_nominatim_request(**kwargs):
         return None
 
 
-def geocode(city=None, state=None, country='USA'):
+def geocode(city=None, state=None, country='US'):
     result = make_nominatim_request(city=city, state=state, country=country)
     if not result:
         result = make_nominatim_request(city=city, state=state)
