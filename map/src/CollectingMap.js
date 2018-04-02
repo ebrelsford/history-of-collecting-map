@@ -58,7 +58,7 @@ export default class CollectingMap extends Component {
     const { decadeRange, gender, role } = filters;
     const filteredData = { type: 'FeatureCollection', features: [] };
     if (!data) return filteredData;
-    let name = filters.name.toLowerCase();
+    let search = filters.search.toLowerCase();
 
     filteredData.features = data.features.filter(feature => {
       if (gender && gender !== 'any') {
@@ -72,8 +72,12 @@ export default class CollectingMap extends Component {
         const validDecades = feature.properties.Decades.filter(d => d >= decadeRange[0] && d < decadeRange[1]);
         if (validDecades.length === 0) return false;
       }
-      if (name && name !== '') {
-        if (feature.properties.Name.toLowerCase().indexOf(name) < 0) return false;
+      if (search && search !== '') {
+        if (
+          feature.properties.Name.toLowerCase().indexOf(search) < 0 &&
+          feature.properties.City.toLowerCase().indexOf(search) < 0 &&
+          feature.properties.Description.toLowerCase().indexOf(search) < 0
+        ) return false;
       }
 
       return true;

@@ -48,9 +48,9 @@ export default class Filters extends Component {
       <div className='Filters'>
         <h2 className='Filter-header'>Filter records</h2>
         <div className='Filter'>
-          <div className='Filter-label'>Name:</div>
+          <div className='Filter-label'>Keyword (name, description, location):</div>
           <div>
-            <input type='text' onChange={e => this.props.onChange({ name: e.target.value })} value={filters.name} />
+            <input type='text' onChange={e => this.props.onChange({ search: e.target.value })} value={filters.search} />
           </div>
         </div>
 

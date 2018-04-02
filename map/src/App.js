@@ -13,8 +13,8 @@ class App extends Component {
       filters: {
         decadeRange: [],
         gender: 'any',
-        name: '',
-        role: 'any'
+        role: 'any',
+        search: ''
       }
     };
   }
