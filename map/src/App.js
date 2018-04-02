@@ -4,6 +4,7 @@ import fetch from 'unfetch';
 import CollectingMap from './CollectingMap';
 import Filters from './Filters';
 import './App.css';
+import './FilterToggle.css';
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class App extends Component {
         gender: 'any',
         role: 'any',
         search: ''
-      }
+      },
+      filtersOpen: false
     };
   }
 
@@ -43,9 +45,17 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.filtersOpen);
     return (
-      <div className="App">
-        <Filters data={this.state.data} filters={this.state.filters} onChange={this.updateFilters.bind(this)} />
+      <div className='App'>
+        {!this.state.filtersOpen ? (
+          <button className='FilterToggle' onClick={() => this.setState({ filtersOpen: true })}>
+            <div className='FilterToggle-line' />
+            <div className='FilterToggle-line' />
+            <div className='FilterToggle-line' />
+          </button>
+        ) : null}
+        <Filters visible={this.state.filtersOpen} data={this.state.data} filters={this.state.filters} onChange={this.updateFilters.bind(this)} onClose={() => this.setState({ filtersOpen: false })} />
         <CollectingMap data={this.state.data} filters={this.state.filters} />
       </div>
     );

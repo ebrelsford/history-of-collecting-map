@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import uniq from 'lodash.uniq';
 import React, { Component } from 'react';
 import { Range } from 'rc-slider';
@@ -41,11 +42,12 @@ export default class Filters extends Component {
   }
 
   render() {
-    const { filters } = this.props;
+    const { filters, onClose, visible } = this.props;
     const { possibleDecadeRange, roles } = this.state;
 
     return (
-      <div className='Filters'>
+      <div className={classNames('Filters', { visible })}>
+        <button className='Filters-close' onClick={onClose}>&times;</button>
         <h2 className='Filter-header'>Filter records</h2>
         <div className='Filter'>
           <div className='Filter-label'>Keyword (name, description, location):</div>

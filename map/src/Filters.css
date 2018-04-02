@@ -7,6 +7,10 @@
   width: 25%;
 }
 
+.Filters-close {
+  display: none;
+}
+
 .Filter {
   margin-bottom: 25px;
 }
@@ -50,4 +54,30 @@
 
 .rc-slider-track {
   background-color: gray;
+}
+
+@media screen and (max-width: 400px) {
+  .Filters {
+    display: none;
+    left: 0;
+    position: absolute;
+    right: 50%;
+    top: 0;
+    width: inherit;
+    z-index: 1000;
+  }
+
+  .Filters.visible {
+    display: block;
+  }
+
+  .Filters-close {
+    background: none;
+    border: 0;
+    display: block;
+    float: right;
+    font-size: 24px;
+    line-height: 20px;
+    padding: 0;
+  }
 }

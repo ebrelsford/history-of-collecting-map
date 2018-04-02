@@ -6,3 +6,10 @@
 .CollectingMap.mouse-over-feature canvas {
   cursor: pointer;
 }
+
+@media screen and (max-width: 400px) {
+  .CollectingMap {
+    float: none;
+    width: 100%;
+  }
+}
