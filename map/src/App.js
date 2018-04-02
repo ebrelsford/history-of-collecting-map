@@ -45,7 +45,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.filtersOpen);
     return (
       <div className='App'>
         {!this.state.filtersOpen ? (
