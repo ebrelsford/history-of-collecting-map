@@ -3,7 +3,15 @@ import sys
 import time
 
 
-ACCEPTED_TYPES = ('administrative', 'city', 'suburb', 'town')
+ACCEPTED_TYPES = (
+    'administrative',
+    'city',
+    'hamlet',
+    'locality',
+    'suburb',
+    'town',
+    'village',
+)
 RESULTS_CACHE = {}
 NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search?'
 
