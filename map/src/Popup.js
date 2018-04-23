@@ -22,10 +22,29 @@ const MultipleFeatures = ({ features, onSelect }) => {
   );
 };
 
+const condenseText = (text) => {
+  const sentences = text.split('. ');
+  let condensed = '';
+  let i = 0;
+  while (i < sentences.length && condensed.length < 100) {
+    const sentence = sentences[i].trim()
+    if (sentence) {
+      if (i > 0) condensed += ' ';
+      condensed += sentence;
+      if (condensed.slice(-1) !== '.') {
+        condensed += '.'
+      }
+    }
+    i++;
+  }
+  return condensed;
+};
+
 const IndividualFeature = ({ deselect, feature, hasMultipleFeatures }) => {
   const { Recid, Name, Role, City, State, Country, Description } = feature.properties;
   const roles = JSON.parse(Role);
   const recordLink = `http://research.frick.org/directoryweb/browserecord.php?-action=browse&-recid=${Recid}`;
+  const condensedDescription = condenseText(Description);
 
   return (
     <div className='Popup-IndividualFeature'>
@@ -39,7 +58,7 @@ const IndividualFeature = ({ deselect, feature, hasMultipleFeatures }) => {
         </div>
         <div className='Popup-IndividualFeature-role'>{roles.join(', ')}</div>
         <div className='Popup-IndividualFeature-location'>{City}{State ? `, ${State}` : null}{Country ? `, ${Country}` : null}</div>
-        <div className='Popup-IndividualFeature-description'>{Description}</div>
+        <div className='Popup-IndividualFeature-description'>{condensedDescription}</div>
         <div className='Popup-IndividualFeature-link'>
           <a href={recordLink} target="_blank">view record</a>
         </div>
