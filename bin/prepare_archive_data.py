@@ -17,9 +17,12 @@ def fix_decades(decades):
     return ';'.join(decade_list)
 
 
-def fix_decription(description):
+def fix_decription(description, condense=False):
     # Remove newlines and other whitespace
     description = re.subn(r'\s', ' ', description.strip())[0]
+
+    if not condense:
+        return description
 
     # Condense the description to the sentence-like strings that are combined
     # below 100 characters
