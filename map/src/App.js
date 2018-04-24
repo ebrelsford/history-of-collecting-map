@@ -48,7 +48,7 @@ class App extends Component {
     return (
       <div className='App'>
         {!this.state.filtersOpen ? (
-          <button className='FilterToggle' onClick={() => this.setState({ filtersOpen: true })}>
+          <button className='FilterToggle' onClick={() => this.setState({ filtersOpen: true })} aria-label='Show filters'>
             <div className='FilterToggle-line' />
             <div className='FilterToggle-line' />
             <div className='FilterToggle-line' />
