@@ -28,3 +28,7 @@ The map is a front-end JavaScript application in `map`. Build it like so:
  4. `npm run build`
 
 The application will then be available in `map/build`.
+
+## Hosting
+
+Learn about how the site is hosted in `docs/server.md`.
