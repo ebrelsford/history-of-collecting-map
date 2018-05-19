@@ -10,7 +10,7 @@ echo "ID,Recid,Name,Years,City,State,Country,Role,Gender,Description,Decades,Oth
 cat $INPUT_FILE >> $PREPARED_FILE
 
 # Clean and geocode
-python bin/prepare_archive_data.py < $PREPARED_FILE | python bin/geocode_archive_data.py > $GEOCODED_FILE
+python3 bin/prepare_archive_data.py < $PREPARED_FILE | python3 bin/geocode_archive_data.py > $GEOCODED_FILE
 csv2geojson $GEOCODED_FILE > $GEOJSON_FILE
 
 # Clean up
