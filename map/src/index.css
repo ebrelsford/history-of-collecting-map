@@ -1,13 +1,12 @@
 @font-face {
     font-family: 'CallunaRegular';
-    src: url('http://research.frick.org/fonts/Calluna/web fonts/calluna_regular_macroman/Calluna-Regular-webfont.eot');
-    src: url('http://research.frick.org/fonts/Calluna/web fonts/calluna_regular_macroman/Calluna-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+    src: url('./fonts/Calluna-Regular-webfont.eot');
+    src: url('./fonts/Calluna-Regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('./fonts/Calluna-Regular-webfont.woff') format('woff'),
-         url('http://research.frick.org/fonts/Calluna/web fonts/calluna_regular_macroman/Calluna-Regular-webfont.ttf') format('truetype'),
-         url('http://research.frick.org/fonts/Calluna/web fonts/calluna_regular_macroman/Calluna-Regular-webfont.svg#CallunaRegular') format('svg');
+         url('./fonts/Calluna-Regular-webfont.ttf') format('truetype'),
+         url('./fonts/Calluna-Regular-webfont.svg#CallunaRegular') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
 html {
