@@ -1,3 +1,4 @@
+from functools import cmp_to_key
 import requests
 import sys
 import time
@@ -16,36 +17,81 @@ RESULTS_CACHE = {}
 NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search?'
 
 
-def nominatim_request(city=None, state=None, country=None):
+def send_nominatim_request(params):
+    """Send Nominatim request."""
+    time.sleep(1.1)
+    response = requests.get(NOMINATIM_URL, params=params)
+    response.raise_for_status()
+    return response.json()
+
+
+def nominatim_request_combined(city=None, state=None, country=None):
+    """
+    Make Nominatim request with city, state, and country as one combined
+    parameter.
+    """
+    q = ', '.join(filter(None, [city, state, country]))
+    params = {
+        'format': 'jsonv2',
+        'q': q,
+    }
+    return send_nominatim_request(params)
+
+
+def nominatim_request_separate(city=None, state=None, country=None):
+    """
+    Make Nominatim request with city, state, and country as separate parameters.
+    """
+    params = {
+        'format': 'jsonv2',
+        'city': city,
+    }
+    if state:
+        params['state'] = state
+    if country:
+        params['country'] = country
+    return send_nominatim_request(params)
+
+
+def compare_responses(r1, r2):
+    """Compare two Nominatim responses."""
+    importance_1 = r1['importance']
+    importance_2 = r2['importance']
+    return importance_2 - importance_1
+
+
+def get_nominatim_result(city=None, state=None, country=None):
+    """
+    Get a nominatim result.
+
+    Search in cache first, then make requests as necessary.
+    """
     q = ', '.join(filter(None, [city, state, country]))
     try:
         return RESULTS_CACHE[q]
     except KeyError:
         pass
 
-    # If cache not hit, go easy on nominatim server and wait a moment
-    time.sleep(1.1)
-
-    params = {
-        'format': 'jsonv2',
-        'q': q,
-    }
-    response = requests.get(NOMINATIM_URL, params=params)
-    response.raise_for_status()
-    result = list(filter(lambda r: r['type'] in ACCEPTED_TYPES, response.json()))[0]
+    kwargs = dict(city=city, state=state, country=country)
+    responses = (
+        nominatim_request_combined(**kwargs) +
+        nominatim_request_separate(**kwargs)
+    )
+    responses = list(filter(lambda r: r['type'] in ACCEPTED_TYPES, responses))
+    result = sorted(responses, key=cmp_to_key(compare_responses))[0]
     RESULTS_CACHE[q] = result
     return result
 
 
-def make_nominatim_request(**kwargs):
+def nominatim_geocode(**kwargs):
     try:
-        return nominatim_request(**kwargs)
+        return get_nominatim_result(**kwargs)
     except Exception as e:
         return None
 
 
 def geocode(city=None, state=None, country='US'):
-    result = make_nominatim_request(city=city, state=state, country=country)
+    result = nominatim_geocode(city=city, state=state, country=country)
     if not result:
-        result = make_nominatim_request(city=city, state=state)
+        result = nominatim_geocode(city=city, state=state)
     return result
