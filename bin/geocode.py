@@ -5,9 +5,6 @@ import time
 
 from states import abbreviation_to_name
 
-# TODO fix:
-#  * New Orleans, LA
-
 
 ACCEPTED_TYPES = (
     'administrative',
