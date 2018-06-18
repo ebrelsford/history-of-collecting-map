@@ -42,7 +42,8 @@ def nominatim_request_combined(city=None, state=None, country=None):
 
 def nominatim_request_separate(city=None, state=None, country=None):
     """
-    Make Nominatim request with city, state, and country as separate parameters.
+    Make Nominatim request with city, state, and country as separate
+    parameters.
     """
     params = {
         'format': 'jsonv2',
