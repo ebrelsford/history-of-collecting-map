@@ -58,11 +58,6 @@ def nominatim_request_separate(city=None, state=None, country=None):
 
 def compare_responses(r1, r2):
     """Compare two Nominatim responses."""
-    place_rank_1 = int(r1['place_rank'])
-    place_rank_2 = int(r2['place_rank'])
-    if place_rank_1 != place_rank_2:
-        return place_rank_1 - place_rank_2
-
     importance_1 = r1['importance']
     importance_2 = r2['importance']
     return importance_2 - importance_1
@@ -81,7 +76,10 @@ def get_nominatim_result(city=None, state=None, country=None):
         pass
 
     kwargs = dict(city=city, state=state, country=country)
-    responses = nominatim_request_separate(**kwargs)
+    responses = (
+        nominatim_request_separate(**kwargs) +
+        nominatim_request_combined(q)
+    )
     responses = list(filter(lambda r: r['type'] in ACCEPTED_TYPES, responses))
     responses = sorted(responses, key=cmp_to_key(compare_responses))
     result = responses[0]
