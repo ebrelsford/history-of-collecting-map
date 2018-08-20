@@ -3,7 +3,7 @@ import uniqBy from 'lodash.uniqby';
 import React, { Component } from 'react';
 import ReactMapboxGl, { GeoJSONLayer, Layer, Source, ZoomControl } from 'react-mapbox-gl';
 import turfBbox from '@turf/bbox';
-import { remove as removeDiacritics } from 'diacritics';
+import Sifter from './EnhancedSifter';
 import Popup from './Popup.js';
 import './CollectingMap.css';
 import { MAPBOX_ACESS_TOKEN, MAPBOX_STYLE } from './config.js';
@@ -56,12 +56,33 @@ export default class CollectingMap extends Component {
   }
 
   filterData(data, filters) {
-    const { decadeRange, gender, role } = filters;
+    const { decadeRange, gender, role, search } = filters;
     const filteredData = { type: 'FeatureCollection', features: [] };
     if (!data) return filteredData;
-    let search = removeDiacritics(filters.search).toLowerCase();
+    if (!this.sifter) {
+      this.sifter = new Sifter(data.features);
+    }
 
-    filteredData.features = data.features.filter(feature => {
+    let sifterResults = [];
+    if (search && search !== '') {
+      let searchTerm = search.toLowerCase();
+      let conjunction = 'or';
+
+      // Use AND conjunction if it looks like that's what the user is doing
+      if (searchTerm.indexOf(' and ') >= 0) {
+        searchTerm = searchTerm.replace(/ and /gi, ' ');
+        conjunction = 'and';
+      }
+
+      // Get matching indices
+      sifterResults = this.sifter.search(searchTerm, {
+        conjunction,
+        fields: ['properties.Name', 'properties.City', 'properties.Description'],
+        nesting: true
+      }).items.map(item => item.id);
+    }
+
+    filteredData.features = data.features.filter((feature, index) => {
       if (gender && gender !== 'any') {
         if (feature.properties.Gender !== gender) return false;
       }
@@ -74,12 +95,7 @@ export default class CollectingMap extends Component {
         if (validDecades.length === 0) return false;
       }
       if (search && search !== '') {
-        let searchText = (
-          removeDiacritics(feature.properties.Name).toLowerCase() +
-          removeDiacritics(feature.properties.City).toLowerCase() +
-          removeDiacritics(feature.properties.Description).toLowerCase()
-        );
-        if (searchText.indexOf(search) < 0) return false;
+        if (sifterResults.indexOf(index) < 0) return false;
       }
 
       return true;

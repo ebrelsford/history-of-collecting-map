@@ -5,7 +5,6 @@
   "dependencies": {
     "@turf/bbox": "^6.0.0",
     "classnames": "^2.2.5",
-    "diacritics": "^1.3.0",
     "lodash.uniq": "^4.5.0",
     "lodash.uniqby": "^4.7.0",
     "mapbox-gl": "^0.44.1",
@@ -16,6 +15,7 @@
     "react-mapbox-gl": "^3.8.0",
     "react-scripts": "1.1.1",
     "react-select": "^1.2.1",
+    "sifter": "^0.5.3",
     "unfetch": "^3.0.0"
   },
   "scripts": {
@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "scp -r build/* wf:webapps/dev_ebrelsford2/clients/frick/latest/"
+    "deploy": "rm -f build/people.json && scp -r build/* frick:map/"
   },
   "homepage": "."
 }
