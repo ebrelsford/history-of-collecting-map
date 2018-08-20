@@ -41,8 +41,9 @@ const condenseText = (text) => {
 };
 
 const IndividualFeature = ({ deselect, feature, hasMultipleFeatures }) => {
-  const { Recid, Name, Role, City, State, Country, Description } = feature.properties;
+  const { Recid, Name, Role, City, State, Country, OtherCities, Description } = feature.properties;
   const roles = JSON.parse(Role);
+  const otherCities = JSON.parse(OtherCities);
   const recordLink = `http://research.frick.org/directoryweb/browserecord.php?-action=browse&-recid=${Recid}`;
   const condensedDescription = condenseText(Description);
 
@@ -58,6 +59,9 @@ const IndividualFeature = ({ deselect, feature, hasMultipleFeatures }) => {
         </div>
         <div className='Popup-IndividualFeature-role'>{roles.join(', ')}</div>
         <div className='Popup-IndividualFeature-location'>{City}{State ? `, ${State}` : null}{Country ? `, ${Country}` : null}</div>
+        {otherCities ?
+          <div className='Popup-IndividualFeature-other-cities'>{otherCities.join('; ')}</div>
+          : null}
         <div className='Popup-IndividualFeature-description'>{condensedDescription}</div>
         <div className='Popup-IndividualFeature-link'>
           <a href={recordLink} target="_blank">view record</a>

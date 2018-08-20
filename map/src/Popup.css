@@ -29,6 +29,11 @@
   margin-top: 20px;
 }
 
+.Popup-IndividualFeature-other-cities {
+  font-size: 11px;
+  line-height: 13px;
+}
+
 .Popup-IndividualFeature-description {
   margin: 25px 0;
 }

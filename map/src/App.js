@@ -31,6 +31,9 @@ class App extends Component {
             feature.properties.Decades = feature.properties.Decades.split(';').map(d => parseInt(d, 10));
           }
           feature.properties.Role = feature.properties.Role.split(';');
+          feature.properties.OtherCities = feature.properties['Other Cities']
+            .split(';')
+            .filter(city => city !== '');
           return feature;
         });
         return mapped;
