@@ -6,7 +6,7 @@ GEOCODED_FILE='geocoded.csv'
 GEOJSON_FILE='results.json'
 
 # Add headers
-echo "ID,Recid,Name,Years,City,State,Country,Role,Gender,Description,Decades,Other Cities" > $PREPARED_FILE
+echo "DealerID,Recid,Name,Years,City,State,Country,Role,Gender,Description,Decades,Other Cities" > $PREPARED_FILE
 cat $INPUT_FILE >> $PREPARED_FILE
 
 # Clean and geocode

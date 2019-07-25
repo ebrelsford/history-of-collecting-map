@@ -6,7 +6,7 @@ import './Popup.css';
 
 const MultipleFeatures = ({ features, onSelect }) => {
   const options = features
-    .map(feature => ({ label: feature.properties.Name, value: feature.properties.ID }))
+    .map(feature => ({ label: feature.properties.Name, value: feature.properties.DealerID }))
     .sort((a, b) => a.label.localeCompare(b.label));
   const location = features[0].properties.City;
 
@@ -15,7 +15,7 @@ const MultipleFeatures = ({ features, onSelect }) => {
       <div>There are {features.length} points around {location}:</div>
 
       <Select
-        onChange={({ value }) => onSelect(features.filter(f => f.properties.ID === value)[0])}
+        onChange={({ value }) => onSelect(features.filter(f => f.properties.DealerID === value)[0])}
         options={options}
       />
     </div>
@@ -41,10 +41,10 @@ const condenseText = (text) => {
 };
 
 const IndividualFeature = ({ deselect, feature, hasMultipleFeatures }) => {
-  const { Recid, Name, Role, City, State, Country, OtherCities, Description } = feature.properties;
+  const { DealerID, Name, Role, City, State, Country, OtherCities, Description } = feature.properties;
   const roles = JSON.parse(Role);
   const otherCities = JSON.parse(OtherCities);
-  const recordLink = `http://research.frick.org/directoryweb/browserecord.php?-action=browse&-recid=${Recid}`;
+  const recordLink = `http://research.frick.org/directory/detail/${DealerID}`;
   const condensedDescription = condenseText(Description);
 
   return (
