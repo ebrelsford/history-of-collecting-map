@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import uniqBy from 'lodash.uniqby';
 import React, { Component } from 'react';
-import ReactMapboxGl, { GeoJSONLayer, Layer, Source, ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl';
 import turfBbox from '@turf/bbox';
 import Sifter from './EnhancedSifter';
 import Popup from './Popup.js';
@@ -112,7 +112,7 @@ export default class CollectingMap extends Component {
     if (features.length > 0) {
       const { coordinates } = features[0].geometry;
       popupCoordinates = { lng: coordinates[0], lat: coordinates[1] };
-      selectedFeatures = uniqBy(features, f => f.properties.ID);
+      selectedFeatures = uniqBy(features, f => f.properties.DealerID);
     }
 
     this.setState({ popupCoordinates, selectedFeatures });
@@ -205,15 +205,15 @@ export default class CollectingMap extends Component {
             type='heatmap'
           />
 
-          <GeoJSONLayer
-            data={filteredData}
-            circlePaint={{
+          <Layer
+            id={COLLECTING_FEATURES_LAYER_ID}
+            paint={{
               'circle-radius': [
                 'interpolate',
                 ['linear'],
                 ['zoom'],
-                0, 3,
-                15, 8
+                0, 2,
+                15, 10
               ],
               'circle-color': '#3a3a3a',
               'circle-opacity': [
@@ -224,9 +224,8 @@ export default class CollectingMap extends Component {
                 15, 1
               ]
             }}
-            layerOptions={{
-              id: COLLECTING_FEATURES_LAYER_ID
-            }}
+            sourceId='collecting'
+            type='circle'
           />
 
           {(popupCoordinates && selectedFeatures.length > 0) ? (
