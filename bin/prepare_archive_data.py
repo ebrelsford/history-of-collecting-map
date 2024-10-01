@@ -31,11 +31,11 @@ def fix_decription(description, condense=False):
     i = 0
     while i < len(sentences) and len(condensed) < 100:
         sentence = sentences[i].strip()
-        if sentence and sentence is not '':
+        if sentence and sentence != '':
             if i > 0:
                 condensed += ' '
             condensed += sentence
-            if condensed[len(condensed) - 1] is not '.':
+            if condensed[len(condensed) - 1] != '.':
                 condensed += '.'
         i += 1
 

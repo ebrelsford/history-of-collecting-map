@@ -16,13 +16,17 @@ ACCEPTED_TYPES = (
     'village',
 )
 RESULTS_CACHE = {}
-NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search?'
+NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search.php?'
 
 
 def send_nominatim_request(params):
     """Send Nominatim request."""
     time.sleep(1.1)
-    response = requests.get(NOMINATIM_URL, params=params)
+    response = requests.get(
+        NOMINATIM_URL,
+        params=params,
+        headers={ 'User-Agent': 'Frick history of collecting map' }
+    )
     response.raise_for_status()
     return response.json()
 
@@ -91,6 +95,7 @@ def nominatim_geocode(**kwargs):
     try:
         return get_nominatim_result(**kwargs)
     except Exception as e:
+        print(e, file=sys.stderr)
         return None
 
 
